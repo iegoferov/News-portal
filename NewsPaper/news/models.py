@@ -55,6 +55,8 @@ class Post(models.Model): #модель должна содержать в се�
     def preview(self):
         return self.post_text[0:255]
 
+    def __str__(self):
+        return f'{self.post_topic.title()}: {self.time} :{self.rating}'
 
 class PostCategoty(models.Model): #Промежуточная модель для связи «многие ко многим»:
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
