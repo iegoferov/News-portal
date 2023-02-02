@@ -1,11 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Sum
+from django.urls import reverse
 
 class Author(models.Model): # Модель, содержащая объекты всех авторов
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     rating = models.FloatField(default=0)
-
+    def __str__(self):
+        return f'{self.user}'
     def update_rating(self):
         #суммарный рейтинг каждой статьи автора;
         au_post_rat = self.post_set.aggregate(author_post_rating=Sum('rating'))
@@ -29,7 +31,8 @@ class Author(models.Model): # Модель, содержащая объекты 
 
 class Category(models.Model): # Категории новостей/статей
     category_name = models.CharField(max_length=255, unique=True)
-
+    def __str__(self):
+        return f'{self.category_name}'
 
 class Post(models.Model): #модель должна содержать в себе статьи и новости, которые создают пользователи
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
@@ -40,7 +43,7 @@ class Post(models.Model): #модель должна содержать в се�
     position = models.CharField(max_length=3, choices=POSITIONS, default='-')
     time = models.DateTimeField(auto_now_add=True)
     post_category = models.ManyToManyField(Category, through='PostCategoty')
-    post_topic = models.CharField(max_length=255, default='Тут мог быть загаловок')
+    post_topic = models.CharField(max_length=255, default='Тут мог быть заголовок')
     post_text = models.TextField(default='Тут мог быть текст')
     rating = models.IntegerField(default=0)
 
@@ -58,6 +61,8 @@ class Post(models.Model): #модель должна содержать в се�
     def __str__(self):
         return f'{self.post_topic.title()}: {self.time} :{self.rating}'
 
+    def get_absolute_url(self):
+        return reverse('post_detail', args=[str(self.id)])
 class PostCategoty(models.Model): #Промежуточная модель для связи «многие ко многим»:
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
