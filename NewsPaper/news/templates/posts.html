@@ -7,6 +7,19 @@ Post
 
 {% block content %}
    <h1>Все новости {{ posts|length }}</h1>
+
+    <form action="" method="get">
+            {{ filterset.form.as_p }}
+            <input type="submit" value="Найти" />
+        </form>
+
+        <hr>
+
+
+        {% if perms.news.add_post %}
+        <a href="{% url 'news_create' %}">Добавить новость</a>
+        {% endif %}
+
    <hr>
    {% if posts %}
        <table>
