@@ -11,16 +11,16 @@ Post
     <form action="" method="get">
             {{ filterset.form.as_p }}
             <input type="submit" value="Найти" />
-        </form>
+    </form>
 
-        <hr>
+    <hr>
 
 
-        {% if perms.news.add_post %}
-        <a href="{% url 'news_create' %}">Добавить новость</a>
-        {% endif %}
+    {% if perms.news.add_post %}
+    <a href="{% url 'post_create' %}">Добавить новость</a>
+    {% endif %}
 
-   <hr>
+
    {% if posts %}
        <table>
            <tr>
@@ -28,6 +28,10 @@ Post
                <td><h3>Дата публикации</h3></td>
                <td><h3>Текст</h3></td>
 
+               {# Условие получается составным. #}
+                {% if perms.news.change_news or perms.news.delete_news %}
+                <td>Действия</td>
+                {% endif %}
            </tr>
 
            {% for post in posts %}
@@ -35,7 +39,15 @@ Post
                <td>{{ post.post_topic|bad_words }}</td>
                <td>{{ post.time|date:'d M Y' }}</td>
                <td>{{ post.post_text|truncatechars:20|bad_words}}</td>
-
+               <td>
+                    {# А здесь доступ для каждой ссылки теперь будем проверять отдельно #}
+                    {% if perms.news.change_post %}
+                    <a href="{% url 'post_update' pk=post.id %}">Изменить</a>
+                    {% endif %}
+                    {% if perms.news.delete_post %}
+                    <a href="{% url 'post_delete' post.id %}">Удалить</a>
+                    {% endif %}
+                </td>
            </tr>
            {% endfor %}
 
