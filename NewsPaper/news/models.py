@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Sum
 from django.urls import reverse
+from django.core.cache import cache
 
 class Author(models.Model): # Модель, содержащая объекты всех авторов
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -64,6 +65,10 @@ class Post(models.Model): #модель должна содержать в се�
 
     def get_absolute_url(self):
         return reverse('post_detail', args=[str(self.id)])
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # сначала вызываем метод родителя, чтобы объект сохранился
+        cache.delete(f'product-{self.pk}')  # затем удаляем его из кэша, чтобы сбросить его
 class PostCategoty(models.Model): #Промежуточная модель для связи «многие ко многим»:
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
