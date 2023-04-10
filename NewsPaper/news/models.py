@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.db.models import Sum
 from django.urls import reverse
 from django.core.cache import cache
+from django.utils.translation import gettext as _
+from django.utils.translation import pgettext_lazy
 
 class Author(models.Model): # Модель, содержащая объекты всех авторов
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -45,7 +47,7 @@ class Post(models.Model): #модель должна содержать в се�
     position = models.CharField(max_length=3, choices=POSITIONS, default='-')
     time = models.DateTimeField(auto_now_add=True)
     post_category = models.ManyToManyField(Category, through='PostCategoty')
-    post_topic = models.CharField(max_length=255, default='Тут мог быть заголовок')
+    post_topic = models.CharField(max_length=255, default='Тут мог быть заголовок', help_text=_('post_topic'))
     post_text = models.TextField(default='Тут мог быть текст')
     rating = models.IntegerField(default=0)
 

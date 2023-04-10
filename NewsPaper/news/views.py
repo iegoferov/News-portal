@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Exists, OuterRef
 from django.shortcuts import render
 from django.core.cache import cache
+from django.utils.translation import gettext as _
+
 
 class PostList(ListView):
     model = Post

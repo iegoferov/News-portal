@@ -6,23 +6,24 @@ Post
 {% endblock title %}
 
 {% block content %}
-   <h1>Все новости {{ posts|length }}</h1>
+{% load i18n %}
+   <h1>{%trans 'All news'%} {{ posts|length }}</h1>
     <form action="" method="get">
        {{ filterset.form.as_p }}
        <input type="submit" value="Найти" />
     </form>
     <hr>
     {% if perms.news.add_post %}
-    <a href="{% url 'post_create' %}">Добавить новость</a>
+    <a href="{% url 'post_create' %}">{%trans 'Add news'%}</a>
     {% endif %}
 
    <hr>
    {% if posts %}
        <table>
            <tr>
-               <td><h3>Заголовок</h3></td>
-               <td><h3>Дата публикации</h3></td>
-               <td><h3>Текст</h3></td>
+               <td><h3>{%trans 'Topic'%}</h3></td>
+               <td><h3>{%trans 'Date'%}</h3></td>
+               <td><h3>{%trans 'Text'%}</h3></td>
 
            </tr>
 
@@ -37,7 +38,7 @@ Post
 
        </table>
    {% else %}
-       <h2>Новостей нет!</h2>
+       <h2>{%trans 'No news'%}!</h2>
    {% endif %}
 
 

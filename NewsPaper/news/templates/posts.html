@@ -6,7 +6,9 @@ Post
 {% endblock title %}
 
 {% block content %}
-   <h1>Все новости {{ posts|length }}</h1>
+{% load i18n %}
+</html>
+   <h1>{%trans 'All news'%} {{ posts|length }}</h1>
 
     <form action="" method="get">
             {{ filterset.form.as_p }}
@@ -17,20 +19,20 @@ Post
 
 
     {% if perms.news.add_post %}
-    <a href="{% url 'post_create' %}">Добавить новость</a>
+    <a href="{% url 'post_create' %}">{%trans 'Add news'%}</a>
     {% endif %}
 
 
    {% if posts %}
        <table>
            <tr>
-               <td><h3>Заголовок</h3></td>
-               <td><h3>Дата публикации</h3></td>
-               <td><h3>Текст</h3></td>
+               <td><h3>{%trans 'Topic'%}</h3></td>
+               <td><h3>{%trans 'Date'%}</h3></td>
+               <td><h3>{%trans 'Text'%}</h3></td>
 
                {# Условие получается составным. #}
                 {% if perms.news.change_news or perms.news.delete_news %}
-                <td>Действия</td>
+               <td><h3>{%trans 'Action'%}</h3></td>
                 {% endif %}
            </tr>
 
@@ -42,10 +44,10 @@ Post
                <td>
                     {# А здесь доступ для каждой ссылки теперь будем проверять отдельно #}
                     {% if perms.news.change_post %}
-                    <a href="{% url 'post_update' pk=post.id %}">Изменить</a>
+                    <a href="{% url 'post_update' pk=post.id %}">{%trans 'Update'%}</a>
                     {% endif %}
                     {% if perms.news.delete_post %}
-                    <a href="{% url 'post_delete' post.id %}">Удалить</a>
+                    <a href="{% url 'post_delete' post.id %}">{%trans 'Delete'%}</a>
                     {% endif %}
                 </td>
            </tr>
@@ -53,7 +55,7 @@ Post
 
        </table>
    {% else %}
-       <h2>Новостей нет!</h2>
+       <h2>{%trans 'No news'%}!</h2>
    {% endif %}
 
 

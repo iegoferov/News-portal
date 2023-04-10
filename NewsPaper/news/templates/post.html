@@ -6,14 +6,15 @@ Post
 {% endblock title %}
 
 {% block content %}
-   <h1>Новость № {{ post.pk }}</h1>
+{% load i18n %}
+   <h1>{%trans 'News'%} № {{ post.pk }}</h1>
    <hr>
    {% if post %}
        <table>
            <tr>
-               <td><h3>Заголовок</h3></td>
-               <td><h3>Дата публикации</h3></td>
-               <td><h3>Текст</h3></td>
+               <td><h3>{%trans 'Topic'%}</h3></td>
+               <td><h3>{%trans 'Date'%}</h3></td>
+               <td><h3>{%trans 'Text'%}</h3></td>
 
            </tr>
 
@@ -28,6 +29,6 @@ Post
 
        </table>
    {% else %}
-       <h2>Новостей нет!</h2>
+       <h2>{%trans 'No news'%}!</h2>
    {% endif %}
 {% endblock content %}
