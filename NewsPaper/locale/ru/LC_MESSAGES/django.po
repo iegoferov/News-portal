@@ -39,8 +39,6 @@ msgstr "Заголовок"
 
 #: .\news\templates\post.html:16 .\news\templates\posts.html:30
 #: .\news\templates\search_post.html:25
-#, fuzzy
-#| msgid "Date"
 msgid "Date"
 msgstr "Дата публикации"
 
@@ -55,14 +53,10 @@ msgid "No news"
 msgstr "Новостей нет"
 
 #: .\news\templates\posts.html:11 .\news\templates\search_post.html:10
-#, fuzzy
-#| msgid "No news"
 msgid "All news"
 msgstr "Все новости"
 
 #: .\news\templates\posts.html:22 .\news\templates\search_post.html:17
-#, fuzzy
-#| msgid "No news"
 msgid "Add news"
 msgstr "Длбавить новость"
 
